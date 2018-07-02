@@ -1,9 +1,11 @@
 import web
-from gothonweb import map
+from gothonweb import map, loginsys
 
 urls = (
     '/game', 'GameEngine',
     '/', 'Index',
+    '/login', 'Login',
+    '/signup', 'Signup'
 )
 
 app = web.application(urls, globals())
@@ -17,6 +19,33 @@ else:
     session = web.config._session
 
 render = web.template.render('templates/', base="layout")
+
+
+class Login(object):
+    def GET(self):
+        session.passbad = False
+        return render.login(passbad=session.passbad)
+
+
+    def POST(self):
+        form = web.input(login=None, pword=None)
+        if loginsys.checkpass(form.login, form.pword):
+            web.seeother("/")
+        else:
+            session.passbad = True
+            return render.login(session.passbad)
+
+class Signup(object):
+    def GET(self):
+        return render.signup()
+
+    def POST(self):
+        logintext = open("~/projects/gothonwebproject/gothonweb/users.txt")
+        newlogin = "%s %s" % (form.login, form.pword)
+        logintext.write(newlogin)
+        logintext.write("/n")
+        close(logintext)
+        return render.login()
 
 
 class Index(object):
