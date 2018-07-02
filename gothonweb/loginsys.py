@@ -1,11 +1,9 @@
 def checkpass(login, pword):
-    login = login.strip()
-    pword = pword.strip()
     logintext = open("gothonweb/users.txt")
     logins = {}
     for line in logintext.readlines():
-        dong, pword = line.split(' ')
-        logins[dong] = pword.strip()
+        dong, pord = line.split(' ')
+        logins[dong] = pord.strip()
     #print logins
     logintext.close()
     try:

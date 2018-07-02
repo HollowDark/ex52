@@ -37,16 +37,18 @@ class Login(object):
 
 class Signup(object):
     def GET(self):
+        session.passbad = False
         return render.signup()
 
     def POST(self):
+        session.passbad = False
         form = web.input(login=None, pword=None)
-        logintext = open("gothonweb/users.txt")
-        newlogin = "%s %s" % (form.login, form.pword)
+        logintext = open("gothonweb/users.txt", "a")
+        newlogin = "%s %s\n" % (form.login, form.pword)
+        print newlogin
         logintext.write(newlogin)
-        logintext.write("/n")
         logintext.close()
-        return render.login()
+        return render.login(passbad=session.passbad)
 
 
 class Index(object):
