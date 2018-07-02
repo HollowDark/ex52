@@ -1,12 +1,13 @@
 def checkpass(login, pword):
-
-    logintext = open("~/projects/gothonwebproject/gothonweb/users.txt")
+    login = login.strip()
+    pword = pword.strip()
+    logintext = open("gothonweb/users.txt")
     logins = {}
     for line in logintext.readlines():
-        login, pword = line.split(' ')
-        logins[login] = pword.strip()
-    close(logintext)
-
+        dong, pword = line.split(' ')
+        logins[dong] = pword.strip()
+    #print logins
+    logintext.close()
     try:
         if logins[login] == pword:
             return True

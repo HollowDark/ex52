@@ -33,18 +33,19 @@ class Login(object):
             web.seeother("/")
         else:
             session.passbad = True
-            return render.login(session.passbad)
+            return render.login(passbad=session.passbad)
 
 class Signup(object):
     def GET(self):
         return render.signup()
 
     def POST(self):
-        logintext = open("~/projects/gothonwebproject/gothonweb/users.txt")
+        form = web.input(login=None, pword=None)
+        logintext = open("gothonweb/users.txt")
         newlogin = "%s %s" % (form.login, form.pword)
         logintext.write(newlogin)
         logintext.write("/n")
-        close(logintext)
+        logintext.close()
         return render.login()
 
 
